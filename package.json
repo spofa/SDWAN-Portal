@@ -1,0 +1,23 @@
+{
+  "name": "SDWAN-Portal",
+  "version": "0.0.1",
+  "description": "E2E Teting of SDWAN Portal",
+  "main": "protractor.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-e2e": "protractor protractor.conf"
+},
+  "author": "Thirumaran Manoharan",
+  "license": "Proprietary license",
+  
+  "devDependencies": {
+    "protractor": "^4.0.0",
+    "protractor-html-screenshot-reporter": "0.0.21",
+    "selenium-webdriver": "2.53.3",
+	"jasmine-allure-reporter": "^1.0.1",
+	"jasmine-spec-reporter": "^2.7.0",
+	"jasmine-core": "~2.5.2",
+	"jasmine": "~2.5.2",
+	"faker": "^3.1.0"
+  }
+}
