@@ -10,14 +10,16 @@
   "author": "Thirumaran Manoharan",
   "license": "Proprietary license",
   
+  "dependencies": {
+    "jasmine-core": "~2.5.2"
+  },
+  
   "devDependencies": {
     "protractor": "^4.0.0",
     "protractor-html-screenshot-reporter": "0.0.21",
-    "selenium-webdriver": "2.53.3",
+    "selenium-webdriver": "~2.53.0",
 	"jasmine-allure-reporter": "^1.0.1",
 	"jasmine-spec-reporter": "^2.7.0",
-	"jasmine-core": "~2.5.2",
-	"jasmine": "~2.5.2",
-	"faker": "^3.1.0"
+	"Faker": "0.7.2"
   }
 }

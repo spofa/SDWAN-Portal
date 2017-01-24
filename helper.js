@@ -94,6 +94,14 @@ var setBrowserParams = function () {
   browser.ignoreSynchronization = true;
 }
 
+
+var scrollIntoView = function(el) {
+		    browser.executeScript(function(el) {
+		      el.scrollIntoView();
+		    }, el.getWebElement());
+		  }
+
+exports.scrollIntoView = scrollIntoView;		
 exports.waitElementToBeVisisble = waitElementToBeVisisble;
 exports.waitElementToBeClickable = waitElementToBeClickable;
 exports.waitElementToDisappear = waitElementToDisappear;

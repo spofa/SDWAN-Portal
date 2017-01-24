@@ -5,7 +5,7 @@ var HomePage = function() {
 	//title and texts of notifications/error message
 	this.pageUrl = '#/home';
 	this.pageTitle = 'SDWAN Portal';
-	this.termSelectionText = 'Please select the Term to proceed';
+	this.termSelectionText = 'Please select the Term to proceed and note there can be only one term option selected per order.';
 	this.packageSelectionText = 'Please select Product type and Transport option';
 	
 	//header elements
@@ -19,11 +19,19 @@ var HomePage = function() {
 	
 	//description elements
 	this.descriptionTitle = element(by.css('.card-title'));
-	this.productDescription = element(by.css('.card-text.description'));
+	this.productDescription = element(by.css('.card-text.description')).all(by.tagName('p'));
+	this.productDescriptionPara1 = this.productDescription.get(0);
+	this.productDescriptionPara2 = this.productDescription.get(1);
+	this.productDescriptionPara3 = this.productDescription.get(2);
 	this.descriptionTitleText = 'SD-WAN Product Description';
-	this.productDescriptionText = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking. SD-WAN uses software to automate the ongoing configuration of edge routers and push traffic over a mix of private, wireless, and broadband network access.SD-WAN offers a real network solution for businesses trying to keep up with the impact a highly dynamic application environment has on their network quality of service. Our SD-WAN combines CenturyLink network design and management expertise with leading software controls and the ubiquity of any connection type or any vendor. The result is improved flexibility through greater bandwidth that delivers increased visibility into network usage and vastly simplified control. CenturyLink offers four popular configurations of SD-WAN as described below -- or a custom configuration can be set up via a sales agent.';
+	this.productDescriptionPara1Text = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking. SD-WAN uses software to automate the ongoing configuration of edge routers and push traffic over a mix of private, wireless, and broadband network access.';
+	this.productDescriptionPara2Text = 'SD-WAN offers a real network solution for businesses trying to keep up with the impact a highly dynamic application environment has on their network quality of service. Our SD-WAN combines CenturyLink network design and management expertise with leading software controls and the ubiquity of any connection type or any vendor. The result is improved flexibility through greater bandwidth that delivers increased visibility into network usage and vastly simplified control.';
+	this.productDescriptionPara3Text = 'CenturyLink offers four popular configurations of SD-WAN as described below -- or a custom configuration can be set up via a sales agent.';
 	
 	//features elements
+	this.featureTitle = element(by.css('#link-feat'));
+	this.featureTitleText = 'Features';
+	this.featuresGrid = element(by.css('#features > div > div > div:nth-child(1)'));
 	this.featuresHeaders = element(by.xpath('//*[@id="features"]/div/div/div[1]/div/div')).all(by.tagName('h3'));
 	this.standardElement = element(by.xpath('//*[@id="features"]/div/div/div[1]/div/ul/li/div[1]/div[1]'));
 	this.haElement = element(by.xpath('//*[@id="features"]/div/div/div[1]/div/ul/li/div[2]/div[1]'));
@@ -49,6 +57,8 @@ var HomePage = function() {
 	this.contactUsButton = element(by.css('.btn.btn-primary.pull-right.pointer-mouse'));
 
 	//pricing elements
+	this.pricingTitle = element(by.css('#pricing > div > div:nth-child(1) > div > h1'));
+	this.pricingTitleText = 'Pricing';
 	this.productTermHeader = element(by.xpath('//*[@id="pricing"]/div/div[3]/div/div[1]/div')).all(by.tagName('h3'));
 	this.basicHelpIcon = element(by.css('#tool-trigger0'));
 	this.basicHaHelpIcon = element(by.css('#tool-trigger1'));
@@ -63,13 +73,13 @@ var HomePage = function() {
 	this.taxesText = '*Above prices does not include Taxes and Non recurring charges';
 	this.taxText = '*Above prices does not include Taxes';
 	this.packageSelectionTextElement = element(by.css('#pricing > div > p > span'));
-	this.basicHelpIconHoverTextElement = element(by.css('#SDWANBASIC'));
-	this.basicHelpIconHoverText = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking';
-	this.basicHaHelpIconHoverTextElement = element(by.css('#SDWANBASICHA'));
+	this.basicHelpIconHoverTextElement = element(by.css('.custom-tooltip'));
+	this.basicHelpIconHoverText = 'SD-WAN BASIC Software-defined wide area networking (SD-WAN) is the next evolution of private networking';
+	this.basicHaHelpIconHoverTextElement = element(by.css('.custom-tooltip'));
 	this.basicHaHelpIconHoverText = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking';
-	this.premiumHelpIconHoverTextElement = element(by.css('#SDWANPREMIUM'));
+	this.premiumHelpIconHoverTextElement = element(by.css('.custom-tooltip'));
 	this.premiumHelpIconHoverText = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking';
-	this.premiumHaHelpIconHoverTextElement = element(by.css('#SDWANPREMIUMHA'));
+	this.premiumHaHelpIconHoverTextElement = element(by.css('.custom-tooltip'));
 	this.premiumHaHelpIconHoverText = 'Software-defined wide area networking (SD-WAN) is the next evolution of private networking';
 	this.basicOwnTransport = element(by.xpath('//*[@id="pricing"]/div/div[3]/div/div[1]/ul/li[1]/div/div[2]'));
 	this.basicCtlTransport = element(by.xpath('//*[@id="pricing"]/div/div[3]/div/div[1]/ul/li[1]/div/div[3]'));
@@ -81,6 +91,8 @@ var HomePage = function() {
 	this.premiumHaCtlTransport = element(by.xpath('//*[@id="pricing"]/div/div[3]/div/div[1]/ul/li[4]/div/div[3]'));
 	this.pricingElement = element(by.css('.text-right.text-success'));
 	this.buildOrderButton = element(by.css('.btn.btn-primary.btn-lg'));
+	this.basicOrderConfirming = element(by.xpath("//div/button[text()='Yes' and @class='btn btn-primary']"));
+	this.basicOrderDeclining = element(by.xpath("//div/button[text()='No' and @class='btn btn-default']"));
 	
 	this.goToDescription = function() {
         helper.waitElementToBeClickable(this.descriptionHeaderElement)
@@ -162,6 +174,15 @@ var HomePage = function() {
         this.buildOrderButton.click()
 	}
 	
+	this.selectingBasicOrderConfirming = function(){
+		helper.waitElementToBeClickable(this.basicOrderConfirming)
+		this.basicOrderConfirming.click();
+	}
+	
+	this.selectingBasicOrderDeclining = function(){
+		helper.waitElementToBeClickable(this.basicOrderDeclining)
+		this.basicOrderDeclining.click();
+	}
 }
 
 module.exports = HomePage;

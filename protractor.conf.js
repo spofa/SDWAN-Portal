@@ -2,7 +2,7 @@ exports.config = {
 		
 	framework: 'jasmine2',
 	jasmineNodeOpts: {
-		 
+		defaultTimeoutInterval: 2500000,
 		   print: function() {}
 		},
 	
@@ -12,18 +12,20 @@ exports.config = {
   
 	capabilities:{
 	  'browserName' : 'chrome',
+	  //'browserName' : 'firefox',
+	  //'marionette': true
 				},
 	
 	useAllAngular2AppRoots: true,
-	baseUrl: 'http://localhost:3000',
+	
 	params: {
-      url: 'http://localhost:3000/'
+      url: 'http://ui-service-dev.pcfomactl.dev.intranet/'
 			},
   
 	suites: {
       billing: 'pages/billing/**/*.spec.js',
 	  cart: 'pages/cart/**/*.spec.js',
-	  contactUS: 'pages/contactUS/**/*.spec.js',
+	  contactUs: 'pages/contactUs/**/*.spec.js',
 	  contract: 'pages/contract/**/*.spec.js',
       home: 'pages/home/**/*.spec.js',
       locations: 'pages/locations/**/*.spec.js',
@@ -37,6 +39,6 @@ exports.config = {
         // add jasmine spec reporter
         jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
 						},
-	
+
   
 }

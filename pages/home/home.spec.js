@@ -1,42 +1,43 @@
 var helper = require('../../helper'),
     HomePage = require('./home.po.js');
-
+	Locations = require('../locations/locations.po.js');	
 describe('Home page : ', function() {
 
 	var homePage = new HomePage();
+	var locations = new Locations();
 	
 	beforeEach(function() {
         browser.get(browser.params.url);
+        browser.manage().window().maximize();
     });
 
     afterEach(function() {
         browser.manage().deleteAllCookies();
     });
    
-	
-/*	it('TC-1 - Landing page verification', function() {
+    /*it('TC134540 - SDWAN Home Page', function() {
 		 expect(browser.getTitle()).toEqual(homePage.pageTitle);
 		 expect(browser.getCurrentUrl()).toContain('#/');
 	}); 
     
-    it('TC-2 - Home page content Verification', function() {
+    it('TC134541 - Fields available in Homepage header', function() {
 		
 		expect(homePage.headerElements.count()).toEqual(3);
-		expect(homePage.descriptionHeaderElement.getText()).toEqual('Description');
+		expect(homePage.descriptionHeaderElement.getText()).toEqual('Overview');
 		expect(homePage.featuresHeaderElement.getText()).toEqual('Features');
 		expect(homePage.pricingHeaderElement.getText()).toEqual('Pricing');
 	});
     
-    it('TC-3 - Home page content Verification', function() {
+    it('TC134542 - Header Tabs', function() {
 		expect(homePage.descriptionHeaderElement.isEnabled()).toBe(true);
 		expect(homePage.featuresHeaderElement.isEnabled()).toBe(true);
 		expect(homePage.pricingHeaderElement.isEnabled()).toBe(true);
 		});
     
-    it('TC-4 - Page Links Verification', function() {
+    it('TC134543 - Click on the Header Tabs', function() {
     	homePage.goToFeatures()
 		expect(homePage.featuresHeaderElement.getAttribute('class')).toEqual('active');
-		expect(homePage.featuresLink.getAttribute('href')).toContain('#features');
+    	expect(homePage.featuresLink.getAttribute('href')).toContain('#features');
 		homePage.goToPricing()
 		expect(homePage.pricingHeaderElement.getAttribute('class')).toEqual('active');
 		expect(homePage.pricingLink.getAttribute('href')).toContain('#pricing');
@@ -45,13 +46,15 @@ describe('Home page : ', function() {
 		expect(homePage.descriptionLink.getAttribute('href')).toContain('#description');
 		});	
     
-    it('TC-5 - Page Links Verification', function() {
+    it('TC134545 - Product Description', function() {
     	expect(homePage.descriptionHeaderElement.getAttribute('class')).toEqual('active');
-		expect(homePage.descriptionTitle.getText()).toEqual(homePage.descriptionTitleText);
-		expect(homePage.productDescription.getText()).toEqual(homePage.productDescriptionText);
+		expect(homePage.descriptionTitle.getText()).toContain(homePage.descriptionTitleText);
+		expect(homePage.productDescriptionPara1.getText()).toEqual(homePage.productDescriptionPara1Text);
+		expect(homePage.productDescriptionPara2.getText()).toEqual(homePage.productDescriptionPara2Text);
+		expect(homePage.productDescriptionPara3.getText()).toEqual(homePage.productDescriptionPara3Text);
 		}); 
     
-    it('TC-6 - Package content Verification', function() {
+    it('TC134546 - Types of Packages', function() {
 		
 		expect(homePage.featuresHeaders.get(1).getText()).toEqual('SD-WAN BASIC');
 		expect(homePage.featuresHeaders.get(2).getText()).toEqual('SD-WAN BASIC HA');
@@ -59,15 +62,15 @@ describe('Home page : ', function() {
 		expect(homePage.featuresHeaders.get(4).getText()).toEqual('SD-WAN PREMIUM HA');
     	}); 
     
-    it('TC-7 - Overall Features Content verification for Templates', function() {
+    it('TC134554 - Features available in all the packages', function() {
 		
 		expect(homePage.standardElement.getText()).toEqual('Standard CPE');
 		expect(homePage.haElement.getText()).toEqual('High Availability');
 		expect(homePage.securityElement.getText()).toEqual('Security Package');
 		expect(homePage.tierElement.getText()).toEqual('Tier 1 Support');
-		});
+		}); 
     
-    it('TC-9 - Features Content verification for BASIC', function() {
+    it('TC134555 - Features available in BASIC package', function() {
 		
 		expect(homePage.standardBasic.getAttribute('class')).toEqual('cyclops-icon md');
 		expect(homePage.haBasic.getText()).toEqual('-');
@@ -75,7 +78,7 @@ describe('Home page : ', function() {
 		expect(homePage.tierBasic.getAttribute('class')).toEqual('cyclops-icon md');
 		}); 
     
-    it('TC-10 - Features Content verification for BASIC HA', function() {
+    it('TC134556 - Features available in BASIC HA package', function() {
 		
 		expect(homePage.standardBasicHA.getAttribute('class')).toEqual('cyclops-icon md');
 		expect(homePage.haBasicHA.getAttribute('class')).toEqual('cyclops-icon md');
@@ -83,7 +86,7 @@ describe('Home page : ', function() {
 		expect(homePage.tierBasicHA.getAttribute('class')).toEqual('cyclops-icon md');
 		}); 
     
-    it('TC-11 - Features Content verification for Premium', function() {
+    it('TC134558 - Features available in PREMIUM package', function() {
 		
 		expect(homePage.standardPremium.getAttribute('class')).toEqual('cyclops-icon md');
 		expect(homePage.haPremium.getText()).toEqual('-');
@@ -91,7 +94,7 @@ describe('Home page : ', function() {
 		expect(homePage.tierPremium.getAttribute('class')).toEqual('cyclops-icon md');
 	});
     
-	it('TC-12 - Features Content verification for Premium HA', function() {
+	it('TC134560 - Features available in PREMIUM HA package', function() {
 		
 		expect(homePage.standardPremiumHA.getAttribute('class')).toEqual('cyclops-icon md');
 		expect(homePage.haPremiumHA.getAttribute('class')).toEqual('cyclops-icon md')
@@ -99,12 +102,20 @@ describe('Home page : ', function() {
 		expect(homePage.tierPremium.getAttribute('class')).toEqual('cyclops-icon md');
 		}); 
     
-    it('TC-14 - Contact Us button and text verification', function() {
+	it('TC134562 - Features Grid', function() {
+		homePage.goToFeatures()
+		expect(homePage.featuresGrid.isEnabled()).toBeTruthy();
+		expect(homePage.featuresGrid.click().isSelected()).toBeFalsy();
+		
+	}); 
+	
+    it('TC134563 - Contact Us button and Text verification', function() {
 		expect(homePage.contactText.getText()).toEqual('Need a Customized SD-WAN Service Offering?');
 		expect(homePage.contactUsButton.isDisplayed()).toBe(true);
+		expect(homePage.contactUsButton.isEnabled()).toBe(true);
 		}); 
     
-    it('TC-15 - Contact us functionality and content verification', function() {
+    it('TC134565 - Contact Us Functionality', function() {
     	
     	homePage.goToFeatures()
     	homePage.goToContactUs()
@@ -114,7 +125,7 @@ describe('Home page : ', function() {
 			});
 		});
     
-    it('TC-18 - Pricing Grid content verification', function() {
+    it('TC134569 - Features available in Pricing Module', function() {
 		homePage.goToPricing()
 		expect(homePage.productTermHeader.count()).toEqual(3);
 		expect(homePage.productTermHeader.get(0).getText()).toEqual('PRODUCT OPTION');
@@ -126,7 +137,7 @@ describe('Home page : ', function() {
 		expect(homePage.premiumHaHelpIcon.isDisplayed()).toBe(true);
 		});
     
-    it('TC-19 - Terms verification', function() {
+    it('TC134570 - Term options checking', function() {
     	homePage.goToPricing()
     	expect(homePage.availableTerms.count()).toEqual(3);
 		expect(homePage.twelveMonths.getText()).toEqual('12m');
@@ -134,61 +145,59 @@ describe('Home page : ', function() {
 		expect(homePage.thirtySixMonths.getText()).toEqual('36m');
 		}); 
     
-    it('TC-20 - Default selection check', function() {
+    it('TC134573 - Default Selection of Term', function() {
     	homePage.goToPricing()
 		expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse');
 		expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse');
 		expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse');
+		expect(homePage.twelveMonths.isSelected()).toBe(false)
 	});
    
-    it('TC-21 - Term functionality', function() {
+    it('TC134576 - Warning Text for Term Selection', function() {
     	homePage.goToPricing()
 		expect(homePage.selectTermTextElement.getText()).toEqual(homePage.termSelectionText);
-	}); 
-    
-    it('TC-23 - Text verification', function() {
-    	homePage.goToPricing()
-    	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse');
-		expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse');
-		expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse');
-		expect(homePage.taxTextElement.getText()).toEqual(homePage.taxesText);
-	}); 
-    
-    it('TC-24 - Term Selection', function() {
-    	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
-    	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active')
+    	expect(homePage.selectTermTextElement.isPresent()).toBe(false);
+	}); 
+   
+    it('TC134578 - Term Functionality Check', function() {
+    	homePage.goToPricing()
+    	homePage.selectingBasicCtlTransport
+    	expect(homePage.basicCtlTransport.isSelected()).toBe(false);
+    	expect(homePage.basicCtlTransport.getAttribute('class')).toEqual('col col-30 currency disabled');
+    	homePage.selectingTwelveMonths()
+    	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active');
     	homePage.selectingTwentyFourMonths()
-		expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse active')
+		expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse active');
     	homePage.selectingThirtySixMonths()
-		expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse active')
+		expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse active');
 	}); 
     
-    it('TC-25 - Text Verificaiton after selecting Term', function() {
+    it('TC134580 - Warning Text for Product Selection', function() {
     	homePage.goToPricing()
+    	expect(homePage.selectTermTextElement.getText()).toEqual(homePage.termSelectionText);
     	homePage.selectingTwelveMonths()
+    	expect(homePage.selectTermTextElement.isPresent()).toBe(false);
     	expect(homePage.packageSelectionTextElement.getText()).toEqual(homePage.packageSelectionText);
 		});
     
-    it('TC-26 - Tax Text Verificaiton after selecting 12m Term', function() {
+    
+    it('TC134584 - NRC text verification for 12m and 24m', function() {
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
     	expect(homePage.taxTextElement.getText()).toEqual(homePage.taxesText);
-		});
-    
-    it('TC-27 - Tax Text Verificaiton after selecting 24m Term', function() {
-    	homePage.goToPricing()
     	homePage.selectingTwentyFourMonths()
-    	expect(homePage.taxTextElement.getText()).toEqual(homePage.taxText);
+    	expect(homePage.taxTextElement.getText()).toEqual(homePage.taxesText);
 		});
     
-    it('TC-28 - Tax Text Verificaiton after selecting 36m Term', function() {
+    it('TC134607 - NRC text for 36M', function() {
     	homePage.goToPricing()
     	homePage.selectingThirtySixMonths()
     	expect(homePage.taxTextElement.getText()).toEqual(homePage.taxText);
 		}); 
     
-    it('TC-29 - Help Icon verfication for all products', function() {
+    
+    it('TC134608 - Help icon', function() {
     	homePage.goToPricing()
     	expect(homePage.basicHelpIcon.isDisplayed()).toBe(true);
 		expect(homePage.basicHaHelpIcon.isDisplayed()).toBe(true);
@@ -196,19 +205,23 @@ describe('Home page : ', function() {
 		expect(homePage.premiumHaHelpIcon.isDisplayed()).toBe(true);
 		});
     
-    it('TC-30 - Help Icon Hover Text verification for all products', function() {
+    it('TC134610 - Mouse hover on Help icon', function() {
     	homePage.goToPricing()
-        browser.actions().mouseMove(homePage.basicHelpIcon).perform();
-    	expect(homePage.basicHelpIconHoverTextElement.getAttribute('ng-reflect-value')).toEqual(homePage.basicHelpIconHoverText);
-    	browser.actions().mouseMove(homePage.basicHaHelpIcon).perform();
-    	expect(homePage.basicHaHelpIconHoverTextElement.getAttribute('ng-reflect-value')).toEqual(homePage.basicHaHelpIconHoverText);
+        browser.actions().mouseMove(homePage.basicHelpIcon).perform();   	
+    	expect(homePage.basicHelpIconHoverTextElement.getText()).toMatch('SD-WAN BASIC');
+    	homePage.goToPricing()
+    	browser.actions().mouseMove(homePage.basicHaHelpIcon).perform()
+    	expect(homePage.basicHaHelpIconHoverTextElement.getText()).toMatch('SD-WAN BASIC HA');
+    	homePage.goToPricing()
     	browser.actions().mouseMove(homePage.premiumHelpIcon).perform();
-    	expect(homePage.premiumHelpIconHoverTextElement.getAttribute('ng-reflect-value')).toEqual(homePage.premiumHelpIconHoverText);
+    	expect(homePage.premiumHelpIconHoverTextElement.getText()).toMatch('SD-WAN PREMIUM');
+    	homePage.goToPricing()
     	browser.actions().mouseMove(homePage.premiumHaHelpIcon).perform();
-    	expect(homePage.premiumHaHelpIconHoverTextElement.getAttribute('ng-reflect-value')).toEqual(homePage.premiumHaHelpIconHoverText);
+    	expect(homePage.premiumHaHelpIconHoverTextElement.getText()).toMatch('SD-WAN PREMIUM HA');
 		}); 
     
-    it('TC-31 - Transport selection verification for all products', function() {
+    
+    it('TC134612 - Transport Selection', function() {
     	
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
@@ -230,8 +243,8 @@ describe('Home page : ', function() {
     	homePage.selectingPremiumHaCtlTransport()
     	expect(homePage.premiumHaCtlTransport.getAttribute('class')).toEqual('col col-30 currency active');
 		});
-    
-   	it('TC-32 - Multiple Term and transport Verification', function() {
+   
+   	it('TC134615 - Product and Term Selection', function() {
    		homePage.goToPricing()
     	homePage.selectingTwelveMonths()
     	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active')
@@ -245,16 +258,16 @@ describe('Home page : ', function() {
     	expect(homePage.basicOwnTransport.getAttribute('class')).toEqual('col col-30 currency');
    	}); 
     
-    it('TC-33 - Pricing amount verification', function() {
+    it('TC134617 - Rate Card', function() {
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
     	homePage.selectingBasicOwnTransport()
     	expect(homePage.pricingElement.getText()).toEqual('Pricing $150 / month');
     	homePage.selectingBasicCtlTransport()
-    	expect(homePage.pricingElement.getText()).toEqual('Pricing $100 / month');
+    	expect(homePage.pricingElement.getText()).toEqual('Pricing $249 / month');
 		}); 
     
-    it('TC-34 - Build order button verification', function() {
+    it('TC134618 - Build Oder', function() {
     	homePage.goToPricing()
     	expect(homePage.buildOrderButton.isEnabled()).toBeFalsy();
     	homePage.selectingTwelveMonths()
@@ -263,21 +276,61 @@ describe('Home page : ', function() {
     	expect(homePage.buildOrderButton.isEnabled()).toBeTruthy();
     	}); 
     
-    it('TC-35 - Building order with own transport', function() {
+    it('TC134619 - "With my own transport" functionality', function() {
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
-    	homePage.selectingBasicOwnTransport()
+    	homePage.selectingPremiumHaOwnTransport()
     	homePage.selectingbuildOrderButton()
     	expect(browser.getCurrentUrl()).toContain('locations');
     });
     
-    it('TC-36 - Building order with CTL transport', function() {
+    it('TC134620 - "With CTL transport" functionality', function() {
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
     	homePage.selectingBasicCtlTransport()
     	homePage.selectingbuildOrderButton()
     	expect(browser.getCurrentUrl()).toContain('contact-us');
     }); 
+   
+   
+    it('TC139409 - Select BASIC product', function() {
+    	homePage.goToPricing()
+    	homePage.selectingTwelveMonths()
+    	homePage.selectingBasicOwnTransport()
+    	homePage.selectingbuildOrderButton()
+    	expect(homePage.basicOrderConfirming.isDisplayed()).toBeTruthy();
+    	expect(homePage.basicOrderDeclining.isDisplayed()).toBeTruthy();
+    	homePage.selectingBasicOrderDeclining()
+    	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active')
+    	expect(homePage.basicOwnTransport.getAttribute('class')).toEqual('col col-30 currency active');
+    	homePage.selectingbuildOrderButton()
+    	expect(homePage.basicOrderConfirming.isDisplayed()).toBeTruthy();
+    	expect(homePage.basicOrderDeclining.isDisplayed()).toBeTruthy();
+    	homePage.selectingBasicOrderConfirming()
+    	expect(browser.getCurrentUrl()).toContain('locations');
+    });
+    
+    it('TC139417 - BASIC Warning Message flow', function() {
+    	homePage.goToPricing()
+    	homePage.selectingTwelveMonths()
+    	homePage.selectingBasicOwnTransport()
+    	homePage.selectingbuildOrderButton()
+    	homePage.selectingBasicOrderDeclining()
+    	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active')
+    	expect(homePage.basicOwnTransport.getAttribute('class')).toEqual('col col-30 currency active');
+    	homePage.selectingbuildOrderButton()
+    	expect(homePage.basicOrderConfirming.isDisplayed()).toBeTruthy();
+    	expect(homePage.basicOrderDeclining.isDisplayed()).toBeTruthy();
+    	homePage.selectingBasicOrderConfirming()
+    	expect(browser.getCurrentUrl()).toContain('locations');
+    }); 
+    
+    it('TC142838 - Term Selection - Before Order Submission', function() {
+    	locations.selectingBasicHaTwelveTerms()
+		locations.homeBreadbrumb.click();
+    	expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
+    	expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
+    });
     */
     
 });
