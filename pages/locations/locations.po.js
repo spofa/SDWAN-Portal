@@ -334,8 +334,8 @@ var Locations = function(){
 	}
 	
 	this.selectingNextButton= function(){
-		//helper.waitElementToBeClickable(this.nextButton)
-		//helper.scrollIntoView(this.nextButton)
+		helper.waitElementToBeClickable(this.nextButton)
+		helper.scrollIntoView(this.nextButton)
 		
 		this.nextButton.click()
 	}

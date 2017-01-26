@@ -22,8 +22,9 @@ var helper = require('../../helper'),
 	this.billingAddressLine2 = element(by.css('#street'));
 	this.billingCountry = element(by.css('#country'))	
 	this.billingState = element(by.css('#state'));
-	this.billingCity = element(by.css('#city'));
+	this.billingCity = element(by.css('input[formcontrolname="city"]'));
 	this.billingZipCode = element(by.css('#zipCode'));
+	this.invalidAddressElement = element(by.css('body > app > main > billing > main > div > section > div > div > form > div.alert.alert-danger > p'));
 	
 	//Billing Contact Details elements
 	this.billingFirstName = element(by.css('#firstName'))
@@ -32,13 +33,34 @@ var helper = require('../../helper'),
 	this.billingPhoneNumber= element(by.css('#phoneNumber'));
 	this.billingPhoneNumberExtn = element(by.css('#phoneNumberExtn'));
 	this.billingEmail = element(by.css('#email'));
+	
+	this.billingNextButton = element(by.xpath('//div/button[text()="Next" and @class="btn btn-primary btn-lg"]'));
+	
+	this.selectingBillingNextButton= function(){
+		helper.waitElementToBeClickable(this.billingNextButton)
+		helper.scrollIntoView(this.billingNextButton)
 		
+		this.billingNextButton.click()
+	}
+	
 	this.headquartesAddressDetails = function() {
 		var randomCompanyName = faker.Company.companyName();
 		var randomAddressLine2 = faker.Address.secondaryAddress();
 	
 		this.billingCompanyName.sendKeys(randomCompanyName);
 		this.billingAddressLine1.sendKeys('9042 w wisconsin ave');
+		this.billingAddressLine2.sendKeys(randomAddressLine2);
+		this.billingCity.sendKeys('lakewood');
+		this.billingZipCode.sendKeys('80232');
+		this.selectingBillingaddState(6)	
+	}
+	
+	this.invalidHeadquartesAddressDetails = function() {
+		var randomCompanyName = faker.Company.companyName();
+		var randomAddressLine2 = faker.Address.secondaryAddress();
+	
+		this.billingCompanyName.sendKeys(randomCompanyName);
+		this.billingAddressLine1.sendKeys('abcd');
 		this.billingAddressLine2.sendKeys(randomAddressLine2);
 		this.billingCity.sendKeys('lakewood');
 		this.billingZipCode.sendKeys('80232');
@@ -64,7 +86,10 @@ var helper = require('../../helper'),
 		this.headquartesAddressDetails()
 		this.billingAddressDetails()
 	}
-	
+	this.fillingBillingWithInvalidDetails = function(){
+		this.invalidHeadquartesAddressDetails()
+		this.billingAddressDetails()
+	}
 	
 	this.selectingBillingaddState = function(stateindex){
 		helper.selectDropdownByNumber(this.billingState,stateindex)
@@ -72,6 +97,18 @@ var helper = require('../../helper'),
 	
 	this.goToBillingForBasicTwelveTerms = function() {
 		locations.selectingBasicTwelveTerms()
+    	for(i=0;i<3;i++)
+    		{
+    		locations.serviceContactDetails()
+        	locations.serviceAddressDetails()
+        	locations.shippingAddressDetails()
+        	locations.selectingAddLocationsButton()
+    		}
+    	locations.selectingNextButton()
+	}
+	
+	this.goToBillingForBasicHaTwelveTerms = function() {
+		locations.selectingBasicHaTwelveTerms()
     	locations.serviceContactDetails()
     	locations.serviceAddressDetails()
     	locations.shippingAddressDetails()
@@ -108,10 +145,13 @@ var helper = require('../../helper'),
 	
 	this.goToBillingForBasicTwentyfourTerms = function() {
 		locations.selectingBasicTwentyfourTerms()
-    	locations.serviceContactDetails()
-    	locations.serviceAddressDetails()
-    	locations.shippingAddressDetails()
-    	locations.selectingAddLocationsButton()
+    	for(i=0;i<3;i++)
+    		{
+    		locations.serviceContactDetails()
+        	locations.serviceAddressDetails()
+        	locations.shippingAddressDetails()
+        	locations.selectingAddLocationsButton()
+    		}
     	locations.selectingNextButton()
 	}
 	
@@ -144,10 +184,13 @@ var helper = require('../../helper'),
 	
 	this.goToBillingForBasicThirtysixTerms = function() {
 		locations.selectingBasicThirtysixTerms()
-    	locations.serviceContactDetails()
-    	locations.serviceAddressDetails()
-    	locations.shippingAddressDetails()
-    	locations.selectingAddLocationsButton()
+    	for(i=0;i<3;i++)
+    		{
+    		locations.serviceContactDetails()
+        	locations.serviceAddressDetails()
+        	locations.shippingAddressDetails()
+        	locations.selectingAddLocationsButton()
+    		}
     	locations.selectingNextButton()
 	}
 	
@@ -169,6 +212,10 @@ var helper = require('../../helper'),
     	locations.selectingNextButton()
 	}
 	
+	this.moveToBilling = function() {
+		
+		locations.selectingNextButton()
+	}
 	}
 	
 	module.exports = Billing;

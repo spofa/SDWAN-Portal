@@ -19,7 +19,7 @@ exports.config = {
 	useAllAngular2AppRoots: true,
 	
 	params: {
-      url: 'http://ui-service-dev.pcfomactl.dev.intranet/'
+      url: 'http://ui-service-qa.pcfomactl.dev.intranet/'
 			},
   
 	suites: {
