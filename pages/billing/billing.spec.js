@@ -97,10 +97,12 @@ describe('Billing Page : ', function() {
     	expect(billing.billingEmail.getText()).not.toBeNull();
     	expect(billing.billingNextButton.getText()).not.toBeNull();
     });
-    */
+    
     it('TC141352 - Back button to Location page', function() {
     	billing.goToBillingForBasicHaTwelveTerms()
-    	billing.headquartesAddressDetails()
+    	billing.fillingBillingDetails()
+    	billing.selectingBillingNextButton()
+    	browser.navigate().back();
     	billing.backBreadcrumb.click();
     	expect(browser.getCurrentUrl()).toContain('#/locations');
     	billing.moveToBilling()
@@ -112,4 +114,5 @@ describe('Billing Page : ', function() {
     	expect(billing.billingCity.getAttribute('value')).not.toBeNull();
     	expect(billing.billingZipCode.getAttribute('value')).not.toBeNull();
     });
+    */
 });

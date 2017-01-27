@@ -1,11 +1,14 @@
 var helper = require('../../helper'),
-    
+	ContactUs = require('../contactUs/contactUs.po.js'),
+	Cart = require('../cart/cart.po.js'),
 	Locations = require('./locations.po.js');
 	
 describe('Locations Page : ', function() {
 
 	
 	var locations = new Locations();
+	var cart = new Cart();
+	var contactUs = new ContactUs();
 	
 	beforeEach(function() {
         browser.get(browser.params.url);
@@ -345,15 +348,29 @@ describe('Locations Page : ', function() {
     
     it('TC140195 - Add Another product with CTL Transport', function() {
     	locations.selectingPremiumHaTwentyfourTerms()
+		locations.serviceContactDetails()
+    	locations.serviceAddressDetails()
+    	locations.shippingAddressDetails()
+    	locations.selectingAddLocationsButton()
+    	locations.addAnotherProductButton.click()
+		locations.selectingPremiumTwentyfourTerms()
     	
 		locations.serviceContactDetails()
     	locations.serviceAddressDetails()
     	locations.shippingAddressDetails()
     	locations.selectingAddLocationsButton()
-		
     	locations.addAnotherProductButton.click()
-    	locations.buildOrderPremiumHaCTLTransport()
-    	expect(browser.getCurrentUrl()).toContain('contact-us');
+    	
+    	locations.buildOrderPremiumCTLTransport()
+    	expect(browser.getCurrentUrl()).toContain('#/contact-us');
+    	contactUs.submittingContactUSDetails()
+    	expect(browser.getCurrentUrl()).toContain('#/thanks');
+		expect(contactUs.contactUsEnquirySubmissionElement.getText()).toEqual(contactUs.contactUsEnquiryText);
+		expect(cart.cartProductCount.getText()).toEqual('2');
+		cart.openingCart()
+		expect(cart.firstProductLocationDetail.getText()).toEqual('1');
+		expect(cart.secondProductLocationDetail.getText()).toEqual('1');
+    	
     });
     
     it('TC142864 - Add Another Product Option - Disable after all the product has been selected.', function() {
@@ -425,7 +442,6 @@ describe('Locations Page : ', function() {
     it('TC146279 - PO Address for Service and Shipping Address', function() {
     	locations.selectingPremiumTwelveTerms()
     	locations.POServiceAddressDetails()
-    	
     	expect(locations.civicOnlyText.getText()).toEqual('Only Civic Address format is allowed');
     	expect(locations.addLocationButton.isEnabled()).toBeFalsy();
     });

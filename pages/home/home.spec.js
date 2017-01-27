@@ -1,10 +1,15 @@
 var helper = require('../../helper'),
-    HomePage = require('./home.po.js');
-	Locations = require('../locations/locations.po.js');	
+    HomePage = require('./home.po.js'),
+	Locations = require('../locations/locations.po.js'),
+	ContactUs = require('../contactUs/contactUs.po.js'),
+	Cart = require('../cart/cart.po.js');
+
 describe('Home page : ', function() {
 
 	var homePage = new HomePage();
 	var locations = new Locations();
+	var cart = new Cart();
+	var contactUs = new ContactUs();
 	
 	beforeEach(function() {
         browser.get(browser.params.url);
@@ -121,8 +126,25 @@ describe('Home page : ', function() {
     	homePage.goToContactUs()
     	
 		browser.getCurrentUrl().then(function(newURL) {
-				expect(newURL).toContain('contact-us');
+				expect(newURL).toContain('#/contact-us');
 			});
+		
+		expect(contactUs.contactUsFirstName.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsLastName.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsPhoneNumber.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsPhoneNumberExtn.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsEmail.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsCompanyName.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsJobTitle.isDisplayed()).toBeTruthy();
+		expect(contactUs.contactUsComments.isDisplayed()).toBeTruthy();
+		expect(contactUs.submitButton.isEnabled()).toBeFalsy();
+		
+		contactUs.fillingContactUsDetails()
+		expect(contactUs.submitButton.isEnabled()).toBeTruthy();
+		contactUs.selectingSubmitButton()
+		expect(browser.getCurrentUrl()).toContain('#/thanks');
+		expect(contactUs.contactUsEnquirySubmissionElement.getText()).toEqual(contactUs.contactUsEnquiryText);
+		
 		});
     
     it('TC134569 - Features available in Pricing Module', function() {
@@ -289,10 +311,13 @@ describe('Home page : ', function() {
     	homePage.selectingTwelveMonths()
     	homePage.selectingBasicCtlTransport()
     	homePage.selectingbuildOrderButton()
-    	expect(browser.getCurrentUrl()).toContain('contact-us');
+    	expect(browser.getCurrentUrl()).toContain('#/contact-us');
+    	contactUs.submittingContactUSDetails()
+    	expect(browser.getCurrentUrl()).toContain('#/thanks');
+		expect(contactUs.contactUsEnquirySubmissionElement.getText()).toEqual(contactUs.contactUsEnquiryText);
     }); 
    
-   
+  
     it('TC139409 - Select BASIC product', function() {
     	homePage.goToPricing()
     	homePage.selectingTwelveMonths()
@@ -318,6 +343,7 @@ describe('Home page : ', function() {
     	homePage.selectingBasicOrderDeclining()
     	expect(homePage.twelveMonths.getAttribute('class')).toEqual('pointer-mouse active')
     	expect(homePage.basicOwnTransport.getAttribute('class')).toEqual('col col-30 currency active');
+    	expect(cart.cartProductCount.isPresent()).toBeFalsy();
     	homePage.selectingbuildOrderButton()
     	expect(homePage.basicOrderConfirming.isDisplayed()).toBeTruthy();
     	expect(homePage.basicOrderDeclining.isDisplayed()).toBeTruthy();
@@ -331,7 +357,17 @@ describe('Home page : ', function() {
     	expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
     	expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
     });
-    */
     
+    it('TC142842 - Term Selection via Add another product', function() {
+    	locations.selectingBasicHaTwelveTerms()
+    	locations.serviceContactDetails()
+    	locations.serviceAddressDetails()
+    	locations.shippingAddressDetails()
+    	locations.selectingAddLocationsButton()
+    	locations.addAnotherProductButton.click()
+    	expect(homePage.twentyFourMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
+    	expect(homePage.thirtySixMonths.getAttribute('class')).toEqual('pointer-mouse disabled');
+    });
+    */
 });
     

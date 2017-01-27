@@ -10,7 +10,7 @@ var helper = require('../../helper'),
 	//header elements
 	this.billingDetailsHeaderElement = element(by.css('body > app > main > billing > main > div > div > div > h2'));
 	this.titleCard = element(by.css('body > app > main > billing > main > div > div > div > div > div > div > div:nth-child(1) > h4'));
-	this.backBreadcrumb = element(by.css('.cyclops-icon.lg'));
+	this.backBreadcrumb = element(by.css('body > app > main > billing > main > div > div > div > div > div > div > div.col-sm-6.text-right > a > svg > use'));
 	this.breadcrumbs = element(by.css('.breadcrumb')).all(by.tagName('li'));
 	this.homeBreadcrumbs = this.breadcrumbs.get(0);
 	this.locationsBreadcrumb = this.breadcrumbs.get(1);
@@ -78,7 +78,7 @@ var helper = require('../../helper'),
 		this.billingLastName.sendKeys(randomLastName);
 		this.billingJobTitle.sendKeys('Software Engineer');
 		this.billingPhoneNumber.sendKeys(randomPhoneNumber);
-		this.billingPhoneNumberExtn.sendKeys(9999);
+		this.billingPhoneNumberExtn.sendKeys(randomExtn);
 		this.billingEmail.sendKeys(randomEmail);
 	}
 	
