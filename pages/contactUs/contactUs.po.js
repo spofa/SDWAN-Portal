@@ -21,8 +21,17 @@ var ContactUs = function(){
 	this.contactUsComments = element(by.css('#comments'));
 	this.submitButton = element(by.buttonText('Submit'));
 	
+	//control messages
+	this.firstNameControlMessage = element(by.css('body > app > main > contact-us > div > section > div:nth-child(2) > div > form > div:nth-child(1) > div > control-messages > span'));
+	this.secondNameControlMessage = element(by.css('body > app > main > contact-us > div > section > div:nth-child(2) > div > form > div:nth-child(2) > div > control-messages > span'));
+	this.emailControlMessage = element(by.css('body > app > main > contact-us > div > section > div:nth-child(2) > div > form > div:nth-child(4) > div > control-messages > span'));
+	this.phoneNumberControlMessage = element(by.css('body > app > main > contact-us > div > section > div:nth-child(2) > div > form > div:nth-child(3) > div.col-sm-3 > control-messages > span'));
+	this.companyNameControlMessage = element(by.css('body > app > main > contact-us > div > section > div:nth-child(2) > div > form > div:nth-child(5) > div > control-messages > span'));
+	
+	//csr page elements
 	this.contactUsEnquiryText = 'Thank you for your enquiry. Our sales representative will be reaching out to you shortly.';
 	this.contactUsEnquirySubmissionElement = element(by.css('.alert.alert-info'));
+	this.csrContactInfo = element(by.css('.card-block'));
 	
 	this.fillingContactUsDetails = function() {
 		var randomFirstName = faker.Name.firstName();

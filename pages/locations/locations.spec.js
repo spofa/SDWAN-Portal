@@ -410,19 +410,34 @@ describe('Locations Page : ', function() {
    
     it('TC142871 - Desired Due Date Field', function() {
     	locations.selectingPremiumTwelveTerms()
-    	locations.dateWidget.click();    	
-    	var current_date = new Date();
-    	var day = today.getDate();
-    	var desiredDatefirst = day + 14 ;
- 	    if(desiredDatefirst>31)
- 	    {
- 	    	desiredDatefirst = desiredDatefirst % 31;
- 	    	
+    	locations.datePicker.click();
+	    locations.columns.click();   	
+	    var today = new Date();
+	    var dd = today.getDate()+1;
+	    var mm = today.getMonth()+1; //January is 0!
+	    var yyyy = today.getFullYear();
+	    
+	    if(dd>31){
+ 	    	dd = dd%31;
+ 	    	mm = mm+1;
  	    }
+ 	    if((dd>28)&&(mm=2)){
+ 	    	dd = dd%28;
+ 	    	mm = mm+1;
+ 	    }
+	    if(dd<10) {
+	        dd='0'+dd;
+	    } 
+
+	    if(mm<10) {
+	        mm='0'+mm;
+	    } 
+ 	   
  	    
- 	    expect(locations.columns.getText()).toEqual(desiredDatefirst);
+ 	    expect(locations.datePicker.getAttribute('value')).toEqual(mm + '-' + dd +'-' +yyyy);
  	    
-    });TC146279	PO Address for Service and Shipping Address
+    });
+    
     
     it('TC142872 - Remarks field', function() {
     	locations.selectingPremiumTwelveTerms()

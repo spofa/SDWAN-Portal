@@ -21,7 +21,7 @@ var Locations = function(){
 	this.serviceDesiredDueDate = element(by.xpath('//*[@id="desiredDueDate"]/div/div[1]/span/button/span'));
 	this.dateWidget = element(By.className("caltable"));
 	//this.columns= this.dateWidget.all(By.tagName("td"));
-	this.columns= element(By.css("td[class*='daycell currmonth']"));
+	this.columns= element(By.css("td[data-event*='click']"));
 	this.calNextMonthButton = element(By.xpath("//*[@id='desiredDueDate']/div/div[2]/table[1]/tbody/tr/td[1]/div/div[3]/button"));
 	this.datePicker = element(by.id('datepicker'));
 	
@@ -108,7 +108,7 @@ var Locations = function(){
         		}*/
         
         this.datePicker.click();
-	    this.datePicker.sendKeys('02-09-2017');
+	    this.columns.click();
 	     
         
         delete randomEmail;
